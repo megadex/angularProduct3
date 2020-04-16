@@ -1,0 +1,45 @@
+<div *ngIf="showForm">
+  <form novalidate (ngSubmit)="onSubmit(productFrm)" [formGroup]="productFrm">
+    
+      <div>
+        <h3 [innerHTML]="modalTitle"></h3>
+      </div>
+
+      <fieldset [disabled]="fieldCtrl">
+        <div class="form-group">
+          <label for="formControlInput1">Product Name <span class="text-danger">*</span></label>
+          <input class="form-control" id="formControlInput1" placeholder="" formControlName="ProductName">
+          <div *ngIf="formErrors.ProductName" class="text-danger">
+            {{ formErrors.ProductName }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="formControlSelect1">Category Type <span class="text-danger">*</span></label>
+          <select class="form-control" id="formControlSelect1" formControlName="CategoryType">
+            <option *ngFor="let ctgry of categoryType" [value]="ctgry.value">
+              {{ ctgry.viewValue }}
+            </option>
+          </select>
+          <div *ngIf="formErrors.CategoryType" class="text-danger">
+            {{ formErrors.CategoryType }}
+          </div>
+        </div>
+      </fieldset>
+
+    <div class="footer text-right">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+        <button type="submit" [class]="classButton" [style.cursor]="productFrm.invalid?'not-allowed':'pointer'"
+                class="btn" [disabled]="productFrm.invalid">{{modalBtnTitle}}</button>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="d-none">
+    <p>{{ dbops }}</p>
+    <div *ngIf="dbops>1">
+      <pre>{{ product | json }}</pre>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="my-4">
+  <h1>Products</h1>
+</div>
+
+<div class="mb-4">
+  <div class="mb-2">
+    <button class="btn btn-primary m-1" (click)="addProduct()"><i class="material-icons align-bottom">add</i> Add</button>
+  </div>
+
+  <div *ngIf="products && products.length==0" class="alert alert-info" role="alert">No record found!</div>
+
+  <div class="table-responsive">
+    <table class="table table-hover border-bottom" *ngIf="products; else loadingScreen;">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Num</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Category Type</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ product.ProductName }}</td>
+          <td>{{ product.CategoryType }}</td>
+          <td>
+            <button type="button" class="btn btn-warning mr-3" (click)="editProduct(product)">Edit</button>
+            <button type="button" class="btn btn-danger" (click)="deleteProduct(product)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #loadingScreen><div class="alert alert-info" role="alert">loading...</div></ng-template>
+  </div>
+
+  <app-messages></app-messages>
+  
+</div>
+
+<app-product-one [modalTitle]="modalTitle" [modalBtnTitle]="modalBtnTitle"
+                 [dbops]="dbops" [product]="product" [products]="products"
+                 [showForm]="showForm" [classButton]="classButton" [fieldCtrl]="fieldCtrl"
+                 (onClose)="close()" (onChanged)="LoadProducts()"></app-product-one>
+<hr>
